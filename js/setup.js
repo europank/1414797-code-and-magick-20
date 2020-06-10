@@ -16,34 +16,16 @@ var getRandomData = function (min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 };
 
-var nInd = getRandomData(0, WIZARD_NAMES.length);
-var fInd = getRandomData(0, WIZARD_FAMILIES.length);
-var namE = WIZARD_NAMES[nInd] + ' ' + WIZARD_FAMILIES[fInd];
+var mages = [];
 
-var cInd = getRandomData(0, WIZARD_COATCOLORS.length);
-var coatColor = WIZARD_COATCOLORS[cInd];
-
-var eInd = getRandomData(0, WIZARD_EYESCOLORS.length);
-var eyesColor = WIZARD_EYESCOLORS[eInd];
-
-var wizards = [
-  {name: namE,
-    coatColor: coatColor,
-    eyesColor: eyesColor
-  },
-  {name: namE,
-    coatColor: coatColor,
-    eyesColor: eyesColor
-  },
-  {name: namE,
-    coatColor: coatColor,
-    eyesColor: eyesColor
-  },
-  {name: namE,
-    coatColor: coatColor,
-    eyesColor: eyesColor
-  }
-];
+for (var i = 0; i < 4; i++) {
+  var mage = {
+    name: WIZARD_NAMES[getRandomData(0, WIZARD_NAMES.length)] + ' ' + WIZARD_FAMILIES[getRandomData(0, WIZARD_FAMILIES.length)],
+    coatColor: WIZARD_COATCOLORS[getRandomData(0, WIZARD_COATCOLORS.length)],
+    eyesColor: WIZARD_EYESCOLORS[getRandomData(0, WIZARD_EYESCOLORS.length)]
+  };
+  mages.push(mage);
+}
 
 var renderWizard = function (wizard) {
   var wizardElement = similarWizardTemplate.cloneNode(true);
@@ -55,9 +37,10 @@ var renderWizard = function (wizard) {
 
 
 var fragment = document.createDocumentFragment();
-for (var i = 0; i < wizards.length; i++) {
-  fragment.appendChild(renderWizard(wizards[i]));
+for (var j = 0; j < mages.length; j++) {
+  fragment.appendChild(renderWizard(mages[j]));
 }
 similarListElement.appendChild(fragment);
+
 
 setupBlock.querySelector('.setup-similar').classList.remove('hidden');

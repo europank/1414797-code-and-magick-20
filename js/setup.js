@@ -4,8 +4,7 @@ var WIZARD_NAMES = ['Иван', 'Хуан Себастьян', 'Мария', 'К
 var WIZARD_FAMILIES = ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
 var WIZARD_COATCOLORS = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
 var WIZARD_EYESCOLORS = ['black', 'red', 'blue', 'yellow', 'green'];
-var mages = [];
-var numberOfMages = 4;
+var NUMBER_OF_MAGES = 4;
 
 var setupBlock = document.querySelector('.setup');
 setupBlock.classList.remove('hidden');
@@ -19,6 +18,7 @@ var getRandomData = function (min, max) {
 };
 
 var getMages = function (quantity) {
+  var mages = [];
   for (var i = 0; i < quantity; i++) {
     var mage = {
       name: WIZARD_NAMES[getRandomData(0, WIZARD_NAMES.length)] + ' ' + WIZARD_FAMILIES[getRandomData(0, WIZARD_FAMILIES.length)],
@@ -27,9 +27,8 @@ var getMages = function (quantity) {
     };
     mages.push(mage);
   }
+  return mages;
 };
-
-getMages(numberOfMages);
 
 var renderWizard = function (wizard) {
   var wizardElement = similarWizardTemplate.cloneNode(true);
@@ -39,12 +38,10 @@ var renderWizard = function (wizard) {
   return wizardElement;
 };
 
-
 var fragment = document.createDocumentFragment();
-for (var j = 0; j < mages.length; j++) {
-  fragment.appendChild(renderWizard(mages[j]));
+for (var j = 0; j < getMages(NUMBER_OF_MAGES).length; j++) {
+  fragment.appendChild(renderWizard(getMages(NUMBER_OF_MAGES)[j]));
 }
 similarListElement.appendChild(fragment);
-
 
 setupBlock.querySelector('.setup-similar').classList.remove('hidden');

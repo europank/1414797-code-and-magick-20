@@ -45,6 +45,9 @@
     setupInputUserName.addEventListener('keydown', onPopupEscapePress);
   };
 
+  var startY = setupBlock.style.top;
+  var startX = setupBlock.style.left;
+
   var closePopup = function () {
     setupBlock.classList.add('hidden');
     document.removeEventListener('keydown', offPopupEscPress);
@@ -54,6 +57,8 @@
     setupWizardEyes.removeEventListener('click', colorEyes);
     setupWizardFireball.removeEventListener('click', colorFireball);
     setupInputUserName.removeEventListener('keydown', onPopupEscapePress);
+    setupBlock.style.top = startY;
+    setupBlock.style.left = startX;
   };
 
   var onPopupEnterPress = function (evt) {

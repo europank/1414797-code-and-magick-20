@@ -11,7 +11,7 @@
   var setupBlock = document.querySelector('.setup');
   var similarListElement = setupBlock.querySelector('.setup-similar-list');
   var similarWizardTemplate = document.querySelector('#similar-wizard-template').content.querySelector('.setup-similar-item');
-
+  var moveButton = document.querySelector('.upload');
 
   var getMages = function (quantity) {
     var mages = [];
@@ -40,7 +40,54 @@
   }
   similarListElement.appendChild(fragment);
 
+  moveButton.addEventListener('mousedown', function (evt) {
+    evt.preventDefault();
 
+    var startCoords = {
+      x: evt.clientX,
+      y: evt.clientY
+    };
+
+    var dragged = false;
+
+    var onMouseMove = function (moveEvt) {
+      moveEvt.preventDefault();
+
+      dragged = true;
+
+      var shift = {
+        x: startCoords.x - moveEvt.clientX,
+        y: startCoords.y - moveEvt.clientY
+      };
+
+      startCoords = {
+        x: moveEvt.clientX,
+        y: moveEvt.clientY
+      };
+
+      setupBlock.style.top = (setupBlock.offsetTop - shift.y) + 'px';
+      setupBlock.style.left = (setupBlock.offsetLeft - shift.x) + 'px';
+    };
+
+    var onMouseUp = function (upEvt) {
+      upEvt.preventDefault();
+
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', onMouseUp);
+
+
+      if (dragged) {
+        var onClickPreventDefault = function (clickEvt) {
+          clickEvt.preventDefault();
+          moveButton.removeEventListener('click', onClickPreventDefault);
+        };
+        moveButton.addEventListener('click', onClickPreventDefault);
+      }
+    };
+
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
+  });
 
   window.dialog = {
     WIZARD_COAT_COLORS: WIZARD_COAT_COLORS,

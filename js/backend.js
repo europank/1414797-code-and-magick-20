@@ -2,6 +2,7 @@
 
 (function () {
   var URL = 'https://javascript.pages.academy/code-and-magick/data';
+  var URL_SAVE = 'https://javascript.pages.academy/code-and-magick';
   var StatusCode = {
     OK: 200
   };
@@ -51,7 +52,7 @@
     });
 
 
-    xhr.open('POST', URL);
+    xhr.open('POST', URL_SAVE);
     xhr.send(data);
   };
 

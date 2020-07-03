@@ -15,6 +15,9 @@
   var setupWizardCoat = document.querySelector('.setup-wizard .wizard-coat');
   var setupWizardEyes = document.querySelector('.setup-wizard .wizard-eyes');
   var setupWizardFireball = document.querySelector('.setup-fireball-wrap');
+  var form = document.querySelector('.setup-wizard-form');
+  var error = setupBlock.querySelector('.error');
+  var numberOfElementsForm = form.children.length;
 
   var colorize = function (array, elemValue, element) {
     var color = array[window.util.getRandomData(0, array.length)];
@@ -61,6 +64,9 @@
     setupInputUserName.removeEventListener('keydown', onPopupEscapePress);
     setupBlock.style.top = startY;
     setupBlock.style.left = startX;
+    if (error) {
+      form.removeChild(error);
+    }
   };
 
   var onPopupEnterPress = function (evt) {
@@ -105,20 +111,29 @@
 
   var setErrorMessage = function (message) {
     var element = document.createElement('div');
-    element.innerHTML = '<p>' + message + '</p>';
-    var form = document.querySelector('.setup-wizard-form');
+    element.innerHTML = '<p>' + message + ' ' + '<button>OK</button>' + '</p>';
+    var buttonOk = element.querySelector('button');
     var player = document.querySelector('.setup-footer');
-    form.insertBefore(element, player);
-    element.style.display = 'inline';
-    element.style.width = '100%';
-    element.style.height = '70px';
-    element.style.paddingTop = '16px';
-    element.style.backgroundColor = 'rgba(0, 0, 238, 1)';
+    buttonOk.addEventListener('click', function () {
+      form.removeChild(element);
+    });
+    buttonOk.style.height = '25px';
+    buttonOk.style.margin = '0';
+    buttonOk.style.lineHeight = '0px';
+    buttonOk.style.fontSize = '16px';
+    buttonOk.style.backgroundColor = 'rgba(232, 232, 232, 0.6)';
+    element.classList.add('error');
     element.style.fontSize = '20px';
     element.style.color = 'red';
     element.style.fontWeight = 'bold';
+    element.style.position = 'absolute';
+    element.style.width = '100%';
     element.style.textAlign = 'center';
-    element.style.zIndex = '100';
+    element.style.backgroundColor = 'white';
+    element.style.border = '2px solid black';
+    if (form.children.length === numberOfElementsForm) {
+      form.insertBefore(element, player);
+    }
   };
 
   window.events = {

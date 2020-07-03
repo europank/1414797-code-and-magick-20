@@ -16,7 +16,7 @@
     return wizardElement;
   };
 
-  window.backend.load(function (wizards) {
+  window.backend.loadToFromServer(window.backend.URL, 'GET', function (wizards) {
     var fragment = document.createDocumentFragment();
     for (var j = 0; j < NUMBER_OF_MAGES; j++) {
       fragment.appendChild(renderWizard(wizards[j]));
@@ -27,9 +27,9 @@
 
   form.addEventListener('submit', function (evt) {
     evt.preventDefault();
-    window.backend.save(new FormData(form), function () {
+    window.backend.loadToFromServer(window.backend.URL_SAVE, 'POST', function () {
       setupBlock.classList.add('hidden');
-    }, window.events.setErrorMessage);
+    }, window.events.setErrorMessage, new FormData(form));
   });
 
   moveButton.addEventListener('mousedown', function (evt) {
